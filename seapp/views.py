@@ -10,11 +10,30 @@ from django.conf import settings
 import urllib
 from seapp.utils import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import F
 
 # Create your views here.
 
 def test(request):
-	import_users("selfies_import_test.csv")
+	
+	#import_users("selfies_import.csv")
+	#photos = Photo.objects.all()
+	#users = User.objects.filter(n_photos__gt=5)
+	#count = User.objects.all().count()
+	#count = Photo.objects.all().count()
+	'''
+	for user in users:
+		print photo.url
+	'''
+	#photo = Photo.objects.get(url__contains="http://distilleryimage10.s3.amazonaws.com/5682f31635c211e2918122000a9f0a12_7.jpg")
+	#print photo.id
+	'''
+	for user in users:
+		#count = count - 1
+		#print count
+		user.ig_id = user.ig_id.replace('"','')
+		user.save()
+	'''
 	return HttpResponseRedirect(reverse('photos'))
 
 def new_user(request, ig_id):
@@ -53,9 +72,15 @@ def photos(request):
 	})
 
 def users(request):
-	users = User.objects.all()
+	users = User.objects.annotate(num_photos=Count('photo')).filter(num_photos__gt=5).order_by('-num_photos')[:50]
+	paginator = Paginator(users, 25)
+	page = request.GET.get('page')
+	try:
+		users_paginated = paginator.page(page)
+	except PageNotAnInteger:
+		return HttpResponseRedirect('/users/?page=1')
 	return render(request, 'html/users.html', {
-        'users' : users,
+        'users' : users_paginated,
     })
 
 def user(request, ig_id):

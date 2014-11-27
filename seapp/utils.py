@@ -6,7 +6,6 @@ import csv
 def import_users(file_location):
 	print "import_users"
 	with open(file_location, 'rU') as csvfile:
-		#selfies = csv.reader(csvfile, delimiter=',', quotechar='"')
 		selfies = csv.reader(csvfile)
 		for row in selfies:
 			ig_id = row[1]

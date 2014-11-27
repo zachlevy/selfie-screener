@@ -22,7 +22,7 @@
 				{% endif %}
 			</li>
 			<li>
-				{% if prev_user.ig_id %}
+				{% if next_user.ig_id %}
 				<a class="btn btn-primary" href="{% url "user" next_user.ig_id %}">Next User</a>
 				{% else %}
 				<a class="btn disabled" href="{% url "user" next_user.ig_id %}">Next User</a>
