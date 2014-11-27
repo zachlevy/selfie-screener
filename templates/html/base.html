@@ -1,0 +1,76 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if lt IE 9]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if !IE] -->
+<html lang='en' style="height:inherit;">
+<!-- <![endif] -->
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>{% block title %}Selfies{% endblock %}</title>
+
+  <!-- Bootstrap-->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <!-- theme -->
+  <link rel="stylesheet" href="{% static "css/theme.css" %}">
+
+  <!--Font Awesome-->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="{% static "css/base.css" %}">
+  {% block styles %}{% endblock %}
+  
+
+</head>
+<body>
+  <header class="navbar navbar-inverse hero {% if request.path != '/' %}away-nav{% endif %}" role="banner">
+    <div class="container">
+      <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="/" class="navbar-brand">Vain</a>
+      </div>
+      <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+        <ul class="nav navbar-nav navbar-right">
+          <li class=""><a href=""><span class="pull-right"></span>Users</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+  <footer class="full-top">
+    
+      <div class="col-sm-12">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10 col-xs-12">
+                <ul class="list-inline">
+                  <li><p>Copyright 2014 First Exit Media</p></li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </footer>
+
+  <!--JQUERY-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <!-- theme -->
+  <script src="{% static "js/theme.js" %}"></script>
+
+  {% block scripts %}{% endblock %}
+</body>

@@ -1,0 +1,11 @@
+/* modules */
+/* this mixin makes possible to add transition to a specific vendor, example: */
+/* -webkit-transition: -webkit-transform 0.5s linear; */
+@import url(../bootstrap/bootstrap.min.css);
+
+.user-list-img {
+	max-width: 50px;
+}
+.photo-list .row {
+	margin-bottom: 1em;
+}

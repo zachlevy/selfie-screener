@@ -1,0 +1,29 @@
+{% extends "html/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Vain BigBoard | Users{% endblock %}
+
+{% block styles %}
+
+{% endblock %}
+
+{% block content %}
+    <h1>User {{ user.ig_id }}</h1>
+    <h1>User Photos</h1>
+	<div class="row photo-list">
+	{% for photo in user.photos %}
+		<div class="col-xs-12 col-sm-3">
+			<img class="img-responsive" src="{{ photo.url }}">
+		</div>
+	{% if forloop.counter|divisibleby:4 %}
+	</div>
+	<div class="row">
+	{% endif %}
+	{% endfor %}
+	</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+</script>
+{% endblock %}
