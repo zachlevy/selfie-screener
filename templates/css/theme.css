@@ -6,6 +6,7 @@
 .user-list-img {
 	max-width: 50px;
 }
-.photo-list .row {
+.photo-list.row {
 	margin-bottom: 1em;
 }
+

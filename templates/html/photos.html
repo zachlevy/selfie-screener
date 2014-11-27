@@ -22,7 +22,23 @@
 {% endif %}
 {% endfor %}
 </div>
-
+<div class="row">
+        <div class="col-xs-12">
+          <div class="pagination">
+            <span class="step-links">
+                {% if photos.has_previous %}
+                    <a class="btn btn-default" href="?page={{ photos.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="current">
+                    Page {{ photos.number }} of {{ photos.paginator.num_pages }}
+                </span>
+                {% if photos.has_next %}
+                    <a class="btn btn-default" href="?page={{ photos.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
     
 {% endblock %}
 

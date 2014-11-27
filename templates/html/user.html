@@ -8,11 +8,37 @@
 {% endblock %}
 
 {% block content %}
-    <h1>User {{ user.ig_id }}</h1>
+    <div class="row">
+	<div class="col-xs-12 col-sm-6">
+		<h1>{{ user.ig_id }}</h1>
+	</div>
+	<div class="col-xs-12 col-sm-6">
+		<ul class="list-inline list-unstyled pull-right">
+			<li>
+				{% if prev_user.ig_id %}
+				<a class="btn btn-primary" href="{% url "user" prev_user.ig_id %}">Previous User</a>
+				{% else %}
+				<a class="btn disabled" href="{% url "user" prev_user.ig_id %}">Previous User</a>
+				{% endif %}
+			</li>
+			<li>
+				{% if prev_user.ig_id %}
+				<a class="btn btn-primary" href="{% url "user" next_user.ig_id %}">Next User</a>
+				{% else %}
+				<a class="btn disabled" href="{% url "user" next_user.ig_id %}">Next User</a>
+				{% endif %}
+			</li>
+		</ul>
+	</div>
+</div>
     <h1>User Photos</h1>
+
 	<div class="row photo-list">
 	{% for photo in user.photos %}
 		<div class="col-xs-12 col-sm-3">
+			<a href="">
+
+			</a>
 			<img class="img-responsive" src="{{ photo.url }}">
 		</div>
 	{% if forloop.counter|divisibleby:4 %}
