@@ -8,9 +8,19 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
+<div class="row">
 	<div class="col-xs-12 col-sm-6">
-		<h1>{{ user.ig_id }}</h1>
+		<h1 id="ig_id">{{ user.ig_id }}</h1>
+		<div class="input-group">
+			<span class="input-group-addon">
+				Male&nbsp;
+				<input id="gender-check" type="checkbox">
+			</span>
+			<input id="select-age" type="text" class="form-control col-xs-3" placeholder="Age">
+		</div><!-- /input-group -->
+		<a id="vain-link" class="btn btn-success" href="{% url "submit_user" user.ig_id "male" "24" "Zach" %}">Submit User</a>
+		<a class="btn btn-danger" href="{% url "remove_user" user.ig_id %}">Remove User</a>
+		<a class="btn btn-default" href="{% url "skip_user" user.ig_id %}">Skip User</a>
 	</div>
 	<div class="col-xs-12 col-sm-6">
 		<ul class="list-inline list-unstyled pull-right">
@@ -23,7 +33,7 @@
 			</li>
 			<li>
 				{% if next_user.ig_id %}
-				<a class="btn btn-primary" href="{% url "user" next_user.ig_id %}">Next User</a>
+				<a class="btn btn-primary" href="{% url "user" next_user.subig_id %}">Next User</a>
 				{% else %}
 				<a class="btn disabled" href="{% url "user" next_user.ig_id %}">Next User</a>
 				{% endif %}
@@ -32,18 +42,16 @@
 	</div>
 </div>
     <h1>User Photos</h1>
-
 	<div class="row photo-list">
 	{% for photo in user.photos %}
 		<div class="col-xs-12 col-sm-3">
-			<a href="">
-
+			<a href="{% url "remove_photo" photo.id %}">
+				<img class="img-responsive" src="{{ photo.url }}">
 			</a>
-			<img class="img-responsive" src="{{ photo.url }}">
 		</div>
 	{% if forloop.counter|divisibleby:4 %}
 	</div>
-	<div class="row">
+	<div class="row photo-list">
 	{% endif %}
 	{% endfor %}
 	</div>
@@ -51,5 +59,44 @@
 
 {% block scripts %}
 <script type="text/javascript">
+function capitaliseFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+function update_link(name, gender) {
+	// get age
+	age = $("#select-age").val();
+	// get ig_id
+	ig_id = $("#ig_id").html();
+	url = "http://localhost:8000/submit-user/" + ig_id + "/" + gender + "/" + age + "/" + name + "/";
+	console.log(url)
+	$("#vain-link").attr("href", url);
+}
+function getGender() {
+	// get gender
+	if($('#gender-check').is(':checked')) {
+		gender = "male";
+	} else {
+		gender = "female";
+	}
+	return gender;
+}
+function getName() {
+	gender = getGender();
+	$.ajax({
+		url: 'http://api.randomuser.me/?gender=' + gender,
+		dataType: 'json',
+		success: function(data){
+			name = data.results[0].user.name.first;
+			name = capitaliseFirstLetter(name)
+			console.log(name);
+			update_link(name, gender)
+		}
+	});
+}
+$(function() {
+	$("#select-age").keydown(function() {
+		getName();
+	});
+})
 </script>
 {% endblock %}
