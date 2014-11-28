@@ -21,6 +21,7 @@
 		<a id="vain-link" class="btn btn-success" href="{% url "submit_user" user.ig_id "male" "24" "Zach" %}">Submit User</a>
 		<a class="btn btn-danger" href="{% url "remove_user" user.ig_id %}">Remove User</a>
 		<a class="btn btn-default" href="{% url "skip_user" user.ig_id %}">Skip User</a>
+		<span id="pop-name"></span>
 	</div>
 	<div class="col-xs-12 col-sm-6">
 		<ul class="list-inline list-unstyled pull-right">
@@ -89,6 +90,7 @@ function getName() {
 			name = data.results[0].user.name.first;
 			name = capitaliseFirstLetter(name)
 			console.log(name);
+			$("#pop-name").html(name)
 			update_link(name, gender)
 		}
 	});

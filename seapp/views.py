@@ -84,7 +84,7 @@ def skip_user(request, ig_id):
 	return HttpResponseRedirect(reverse(get_next_user))
 
 def get_next_user(request):
-	user = User.objects.annotate(num_photos=Count('photo')).filter(num_photos__gte=5).annotate(num_subs=Count('submission')).filter(num_subs=0).annotate(num_skips=Count('skipped')).filter(num_skips=0).order_by('num_photos').first()
+	user = User.objects.annotate(num_photos=Count('photo')).annotate(num_subs=Count('submission')).annotate(num_skips=Count('skipped')).filter(num_photos__gte=5, num_skips=0, num_subs=0).order_by('num_photos').first()
 	return HttpResponseRedirect(reverse('user', kwargs={'ig_id':user.ig_id}))
 
 def user(request, ig_id):
@@ -119,7 +119,7 @@ def remove_photo(request, photo_id):
 def remove_user(request, ig_id):
 	user = User.objects.filter(ig_id=ig_id).first()
 	user.delete()
-	return HttpResponseRedirect(reverse('users'))
+	return HttpResponseRedirect(reverse(get_next_user))
 
 def submit_user(request, ig_id, gender, age, name):
 	try:
@@ -149,7 +149,7 @@ def submit_user(request, ig_id, gender, age, name):
 	except Exception, e:
 		print "submit_user"
 		print e
-	return HttpResponseRedirect(reverse('user', kwargs={'ig_id':user.ig_id}))
+	return HttpResponseRedirect(reverse(get_next_user))
 
 
 
